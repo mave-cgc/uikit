@@ -2,6 +2,8 @@ plugins {
     id 'com.android.application'
     id 'kotlin-android'
 }
+apply plugin: 'com.github.dcendents.android-maven'
+group='com.github.CHENGC'
 
 android {
     compileSdkVersion 28
@@ -10,6 +12,7 @@ android {
     defaultConfig {
         applicationId "com.nh.commondemo"
         minSdkVersion 21
+        //noinspection ExpiredTargetSdkVersion
         targetSdkVersion 28
         versionCode 1
         versionName "1.0"
