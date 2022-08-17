@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.appcompat.widget.AppCompatCheckedTextView
+        android:id="@+id/itemChildTabBg"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="@drawable/item_menu_child_selected"
+        android:singleLine="true"
+        android:textColor="@color/item_menu_child_text_color"
+        app:layout_constraintBottom_toBottomOf="@id/itemChildTab"
+        app:layout_constraintTop_toTopOf="@id/itemChildTab" />
+
+    <androidx.appcompat.widget.AppCompatCheckedTextView
+        android:id="@+id/itemChildTab"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:paddingTop="@dimen/dp_10"
+        android:paddingBottom="@dimen/dp_10"
+        android:singleLine="true"
+        android:text="积分转EP"
+        android:textAlignment="center"
+        android:textColor="@color/item_menu_child_text_color"
+        android:textSize="10sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/itemChildTabImg"
+        android:layout_width="7.5dp"
+        android:layout_height="4dp"
+        android:layout_marginStart="@dimen/dp_4"
+        tools:src="@mipmap/icon_tab_down"
+        app:layout_constraintBottom_toBottomOf="@id/itemChildTab"
+        app:layout_constraintStart_toEndOf="@id/itemChildTab"
+        app:layout_constraintTop_toTopOf="@id/itemChildTab" />
+</androidx.constraintlayout.widget.ConstraintLayout>

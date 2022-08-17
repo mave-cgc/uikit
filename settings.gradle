@@ -1,0 +1,3 @@
+rootProject.name = "CommonDemo"
+include ':app'
+include ':lib_uikit'

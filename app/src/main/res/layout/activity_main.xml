@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:animateLayoutChanges="true"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <com.nh.lib_uikit.view.filter.CustomFilterTextView
+        android:id="@+id/tvCustomFilterTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="48dp"
+        android:drawablePadding="4dp"
+        android:gravity="center"
+        android:paddingStart="15dp"
+        android:paddingEnd="15dp"
+        android:text="分类"
+        android:textSize="28sp"
+        app:defDrawable="@mipmap/icon_to_down"
+        app:defTextColor="#333333"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:selDrawable="@mipmap/icon_to_top_a"
+        app:selTextColor="#F2664C"
+        app:showLocation="left" />
+
+    <com.nh.lib_uikit.view.filter.CustomFilterMenuView
+        android:id="@+id/customFilterMenuView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvCustomFilterTextView" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

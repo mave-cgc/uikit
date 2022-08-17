@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="CustomFilterTextView">
+        <attr name="selDrawable" format="reference" />
+        <attr name="defDrawable" format="reference" />
+        <attr name="selTextColor" format="color|reference" />
+        <attr name="defTextColor" format="color|reference" />
+        <attr name="showLocation">
+            <enum name="top" value="0" />
+            <enum name="bottom" value="1" />
+            <enum name="left" value="2" />
+            <enum name="right" value="3" />
+        </attr>
+    </declare-styleable>
+</resources>
