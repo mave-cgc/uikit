@@ -2,6 +2,8 @@ plugins {
     id 'com.android.library'
     id 'kotlin-android'
 }
+apply plugin: 'com.github.dcendents.android-maven'
+group='com.github.CHENGC'
 
 android {
     compileSdkVersion 28
@@ -30,6 +32,28 @@ android {
     }
     kotlinOptions {
         jvmTarget = '1.8'
+    }
+
+    //以下为配置library注释在打包jar后保留
+    // 打包源码jar
+    task sourcesJar(type: Jar) {
+        from android.sourceSets.main.java.srcDirs
+        classifier = 'sources'
+    }
+    task javadoc(type: Javadoc) {
+        failOnError false
+        source = android.sourceSets.main.java.sourceFiles
+        classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
+        classpath += configurations.compile
+    }
+    // 打包文档jar
+    task javadocJar(type: Jar, dependsOn: javadoc) {
+        classifier = 'javadoc'
+        from javadoc.destinationDir
+    }
+    artifacts {
+        archives sourcesJar
+        archives javadocJar
     }
 }
 
