@@ -22,7 +22,7 @@
         android:paddingTop="@dimen/dp_10"
         android:paddingBottom="@dimen/dp_10"
         android:singleLine="true"
-        android:text="积分转EP"
+        tools:text="积分转EP"
         android:textAlignment="center"
         android:textColor="@color/item_menu_child_text_color"
         android:textSize="10sp"

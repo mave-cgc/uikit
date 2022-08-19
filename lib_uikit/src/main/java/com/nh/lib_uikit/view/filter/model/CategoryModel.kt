@@ -17,6 +17,7 @@ class CategoryModel(
 ) : MultiItemEntity {
     /**是否被选中*/
     var isSelected: Boolean = false
+    var isOnClick: Boolean = false
     override val itemType: Int
         get() = if (TextUtils.isEmpty(title)) 2 else 1
 }
