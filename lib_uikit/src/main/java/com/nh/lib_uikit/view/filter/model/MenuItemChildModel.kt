@@ -10,6 +10,7 @@ class MenuItemChildModel : MultiItemEntity {
     var isSelected: Boolean = false
     var currentSelectedChildPosition: Int = -1
 
-    override val itemType: Int
-        get() = if (TextUtils.isEmpty(title)) 2 else 1
+    override fun getItemType(): Int {
+        return if (TextUtils.isEmpty(title)) 2 else 1
+    }
 }

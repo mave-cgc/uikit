@@ -3,7 +3,6 @@ package com.nh.lib_uikit.view
 import android.graphics.Rect
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
-import androidx.recyclerview.widget.RecyclerView.ItemDecoration
 import com.nh.lib_uikit.view.DisplayUtil.dpToPx
 import java.util.*
 
@@ -12,7 +11,7 @@ import java.util.*
  * shige chen on 2020/1/4
  * shigechen@globalsources.com
  */
-internal class SpaceItemDecoration : ItemDecoration {
+internal class SpaceItemDecoration : RecyclerView.ItemDecoration {
     private var topMargin: Int
     private var bottomMargin: Int
     private var horizontalSpacing: Int

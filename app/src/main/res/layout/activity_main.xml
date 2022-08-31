@@ -23,7 +23,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:selDrawable="@mipmap/icon_to_top_a"
         app:selTextColor="#F2664C"
-        app:showLocation="left" />
+        app:showLocation="right" />
 
     <com.nh.lib_uikit.view.filter.CustomFilterMenuView
         android:id="@+id/customFilterMenuView"

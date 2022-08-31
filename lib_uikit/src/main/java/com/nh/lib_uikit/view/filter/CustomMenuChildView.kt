@@ -9,7 +9,7 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.chad.library.adapter.base.BaseQuickAdapter
-import com.chad.library.adapter.base.viewholder.BaseViewHolder
+import com.chad.library.adapter.base.BaseViewHolder
 import com.nh.lib_uikit.R
 import com.nh.lib_uikit.view.SpaceItemDecoration
 import com.nh.lib_uikit.view.filter.adapter.MenuListAdapter
@@ -163,14 +163,14 @@ class CustomMenuChildView : FrameLayout {
             showMenuChild()
             //记录临时选择的菜单项
             currentSelectedItemMenuPosition = itemMenuChildPosition
-            mChildAdapter.setNewInstance(mAdapter.data[itemMenuChildPosition].subCategory as MutableList<CategoryModel>?)
+            mChildAdapter.setNewData(mAdapter.data[itemMenuChildPosition].subCategory as MutableList<CategoryModel>?)
             if (mAdapter.data[itemMenuChildPosition].isOnClick && mMenuItemPosition >= 0) {
                 mMenuListAdapter?.getOpenListener()?.onOpen(mMenuItemPosition)
                 mAdapter.data[itemMenuChildPosition].isOnClick = false
             }
         } else {
             hintMenuChild()
-            mChildAdapter.setNewInstance(null)
+            mChildAdapter.setNewData(null)
         }
         mAdapter.notifyDataSetChanged()
     }
@@ -196,7 +196,7 @@ class CustomMenuChildView : FrameLayout {
         this.mMenuListAdapter = mMenuListAdapter
         this.mMenuItemPosition = itemMenuPosition
         if (itemMenuPosition >= 0 && itemMenuPosition < mMenuListAdapter.data.size) {
-            mAdapter.setNewInstance(mMenuListAdapter.data[itemMenuPosition].menuList)
+            mAdapter.setNewData(mMenuListAdapter.data[itemMenuPosition].menuList)
         }
     }
 
@@ -216,8 +216,8 @@ class CustomMenuChildView : FrameLayout {
     private class CustomMenuChildChildItemAdapter : BaseQuickAdapter<CategoryModel, BaseViewHolder>(R.layout.item_menu_child_chili_tab_list) {
 
         override fun convert(holder: BaseViewHolder, item: CategoryModel) {
-            holder.setBackgroundResource(R.id.itemChildTabBg, R.drawable.item_menu_child_child_tab_bg)
-            holder.getView<AppCompatCheckedTextView>(R.id.itemChildTab).setTextColor(ContextCompat.getColor(context, R.color.item_menu_child_child_text_color))
+            holder.setBackgroundRes(R.id.itemChildTabBg, R.drawable.item_menu_child_child_tab_bg)
+            holder.getView<AppCompatCheckedTextView>(R.id.itemChildTab).setTextColor(ContextCompat.getColor(mContext, R.color.item_menu_child_child_text_color))
             holder.getView<AppCompatCheckedTextView>(R.id.itemChildTabBg).isChecked = item.isSelected
             holder.getView<AppCompatCheckedTextView>(R.id.itemChildTab).isChecked = item.isSelected
             holder.setGone(R.id.itemChildTabImg, true)

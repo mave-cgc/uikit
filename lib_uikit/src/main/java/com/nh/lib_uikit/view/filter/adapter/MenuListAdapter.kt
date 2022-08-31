@@ -1,12 +1,12 @@
 package com.nh.lib_uikit.view.filter.adapter
 
 import com.chad.library.adapter.base.BaseMultiItemQuickAdapter
-import com.chad.library.adapter.base.viewholder.BaseViewHolder
+import com.chad.library.adapter.base.BaseViewHolder
 import com.nh.lib_uikit.R
 import com.nh.lib_uikit.view.filter.CustomMenuChildView
 import com.nh.lib_uikit.view.filter.model.MenuItemChildModel
 
-class MenuListAdapter : BaseMultiItemQuickAdapter<MenuItemChildModel, BaseViewHolder>() {
+class MenuListAdapter(data: MutableList<MenuItemChildModel>?) : BaseMultiItemQuickAdapter<MenuItemChildModel, BaseViewHolder>(data) {
     init {
         addItemType(1, R.layout.item_menu_title_list)
         addItemType(2, R.layout.item_menu_child_list)
@@ -15,17 +15,21 @@ class MenuListAdapter : BaseMultiItemQuickAdapter<MenuItemChildModel, BaseViewHo
     /**当前被选中的位置*/
     var currentSelectedPosition: Int = -1
 
-    override fun convert(holder: BaseViewHolder, item: MenuItemChildModel) {
-        if (item.itemType == 2) {
-            val mCustomMenuChildChildView = holder.getView<CustomMenuChildView>(R.id.menuChiliRlv)
-            mCustomMenuChildChildView.setNewData(holder.layoutPosition, this)
-            if (item.isSelected) {
-                mCustomMenuChildChildView.openChildMenu(item.currentSelectedChildPosition)
-            } else {
-                mCustomMenuChildChildView.closeChildMenu()
+    override fun convert(holder: BaseViewHolder?, item: MenuItemChildModel?) {
+        holder?.apply {
+            item?.apply {
+                if (itemType == 2) {
+                    val mCustomMenuChildChildView = getView<CustomMenuChildView>(R.id.menuChiliRlv)
+                    mCustomMenuChildChildView.setNewData(layoutPosition, this@MenuListAdapter)
+                    if (isSelected) {
+                        mCustomMenuChildChildView.openChildMenu(currentSelectedChildPosition)
+                    } else {
+                        mCustomMenuChildChildView.closeChildMenu()
+                    }
+                } else {
+                    setText(R.id.itemMenuTvTitle, title)
+                }
             }
-        } else {
-            holder.setText(R.id.itemMenuTvTitle, item.title)
         }
     }
 

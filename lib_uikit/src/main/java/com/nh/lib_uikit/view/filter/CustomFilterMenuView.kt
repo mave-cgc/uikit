@@ -5,7 +5,6 @@ import android.graphics.Color
 import android.util.AttributeSet
 import android.view.View
 import android.widget.FrameLayout
-import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.nh.lib_uikit.R
@@ -26,11 +25,12 @@ class CustomFilterMenuView : FrameLayout {
     }
 
 
+    private var newList: MutableList<MenuItemChildModel>? = null
     private val menuRlv: RecyclerView by lazy {
         findViewById(R.id.menuRlv)
     }
     private val mAdapter by lazy {
-        MenuListAdapter()
+        MenuListAdapter(newList)
     }
 
     init {
@@ -102,13 +102,14 @@ class CustomFilterMenuView : FrameLayout {
     }
 
     fun setNewData(list: MutableList<CategoryModel>?) {
-        val newList = mutableListOf<MenuItemChildModel>()
+        newList?.clear()
+        newList = mutableListOf()
         ListUtil.averageAssignFixLength(list, 3).forEach {
-            newList.add(MenuItemChildModel().apply {
+            newList?.add(MenuItemChildModel().apply {
                 menuList = it as MutableList<CategoryModel>?
             })
         }
-        mAdapter.setNewInstance(newList)
+        mAdapter.setNewData(newList)
     }
 
     /**
