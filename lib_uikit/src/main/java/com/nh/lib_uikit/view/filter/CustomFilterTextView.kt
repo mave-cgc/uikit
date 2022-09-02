@@ -46,6 +46,7 @@ class CustomFilterTextView : AppCompatTextView {
             } else {
                 mCustomFilterMenuView?.hintMenu()
             }
+            onClickStateChangeListener?.onClickStateChange(currentSelectedState)
         }
     }
 
@@ -67,6 +68,7 @@ class CustomFilterTextView : AppCompatTextView {
     private fun changeUpdateState(isSelected: Boolean): Drawable? {
         return if (isSelected) selDrawable else defDrawable
     }
+
     private fun changeUpdateTextState(isSelected: Boolean) {
         setTextColor(if (isSelected) selTextColor else defTextColor)
     }
@@ -77,5 +79,14 @@ class CustomFilterTextView : AppCompatTextView {
         mCustomFilterMenuView = menuView
     }
 
+    private var onClickStateChangeListener: OnClickStateChangeListener? = null
+
+    fun setOnClickStateChangeListener(listener: OnClickStateChangeListener) {
+        this.onClickStateChangeListener = listener
+    }
+
+    interface OnClickStateChangeListener {
+        fun onClickStateChange(isClick: Boolean)
+    }
 
 }
