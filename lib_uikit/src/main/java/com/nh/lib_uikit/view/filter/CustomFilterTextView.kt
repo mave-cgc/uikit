@@ -7,6 +7,7 @@ import android.graphics.drawable.Drawable
 import android.util.AttributeSet
 import androidx.appcompat.widget.AppCompatTextView
 import com.nh.lib_uikit.R
+import com.nh.lib_uikit.view.filter.model.CategoryModel
 
 /**自定义重写TextView*/
 class CustomFilterTextView : AppCompatTextView {
@@ -16,6 +17,11 @@ class CustomFilterTextView : AppCompatTextView {
     private var defTextColor: Int = Color.parseColor("#333333")
     private var selTextColor: Int = Color.parseColor("#333333")
     private var showLocation: Int = 3
+
+    private var currentSelectedState = false
+    private var mCustomFilterMenuView: CustomFilterMenuView? = null
+    private var onClickStateChangeListener: OnClickStateChangeListener? = null
+    private var onClickStateChangeBlock: ((Boolean) -> Unit)? = null
 
     constructor(context: Context) : this(context, null)
     constructor(context: Context, attrs: AttributeSet?) : this(context, attrs, 0)
@@ -34,26 +40,20 @@ class CustomFilterTextView : AppCompatTextView {
         setDrawable()
     }
 
-    private var currentSelectedState = false
-
     init {
         setOnClickListener {
             currentSelectedState = !currentSelectedState
             setDrawable()
             changeUpdateTextState(currentSelectedState)
-            if (currentSelectedState) {
-                mCustomFilterMenuView?.showMenu()
-            } else {
-                mCustomFilterMenuView?.hintMenu()
-            }
             onClickStateChangeListener?.onClickStateChange(currentSelectedState)
+            onClickStateChangeBlock?.invoke(currentSelectedState)
         }
     }
 
-    fun selectedState() {
-        currentSelectedState = !currentSelectedState
+    fun setCheckState(state: Boolean) {
+        currentSelectedState = state
         setDrawable()
-        changeUpdateTextState(isSelected)
+        changeUpdateTextState(currentSelectedState)
     }
 
     private fun setDrawable() {
@@ -73,16 +73,16 @@ class CustomFilterTextView : AppCompatTextView {
         setTextColor(if (isSelected) selTextColor else defTextColor)
     }
 
-    private var mCustomFilterMenuView: CustomFilterMenuView? = null
-
     fun bindMenuView(menuView: CustomFilterMenuView) {
         mCustomFilterMenuView = menuView
     }
 
-    private var onClickStateChangeListener: OnClickStateChangeListener? = null
-
     fun setOnClickStateChangeListener(listener: OnClickStateChangeListener) {
         this.onClickStateChangeListener = listener
+    }
+
+    fun setOnClickStateChangeListener(block: ((Boolean) -> Unit)?) {
+        this.onClickStateChangeBlock = block
     }
 
     interface OnClickStateChangeListener {

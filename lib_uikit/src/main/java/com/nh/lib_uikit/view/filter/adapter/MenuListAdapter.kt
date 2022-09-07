@@ -7,10 +7,15 @@ import com.nh.lib_uikit.view.filter.CustomMenuChildView
 import com.nh.lib_uikit.view.filter.model.MenuItemChildModel
 
 class MenuListAdapter(data: MutableList<MenuItemChildModel>?) : BaseMultiItemQuickAdapter<MenuItemChildModel, BaseViewHolder>(data) {
+
     init {
         addItemType(1, R.layout.item_menu_title_list)
         addItemType(2, R.layout.item_menu_child_list)
     }
+
+    var currentSelectedItemPosition = -1
+    var currentSelectedItemMenuPosition = -1
+    var currentSelectedItemMenuChildPosition = -1
 
     /**当前被选中的位置*/
     var currentSelectedPosition: Int = -1

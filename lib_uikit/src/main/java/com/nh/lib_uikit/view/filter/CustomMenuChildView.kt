@@ -51,9 +51,6 @@ class CustomMenuChildView : FrameLayout {
         initAdapter()
     }
 
-    private var tabStateClickListener: ((Int, Boolean) -> Unit)? = null
-    private var selectedTabListener: ((String, String) -> Unit)? = null
-
     private fun showMenuChild() {
         if (fl.visibility == View.GONE) {
             fl.visibility = View.VISIBLE
@@ -116,7 +113,7 @@ class CustomMenuChildView : FrameLayout {
         val clickCategoryModel = mAdapter.data[position]
         if (clickCategoryModel.isSelected) {
             if (clickCategoryModel.subCategory?.isNotEmpty() == true) {
-                mAdapter.data[position].isSelected = clickCategoryModel.subCategory.filter { it.isSelected }.isNotEmpty()
+                mAdapter.data[position].isSelected = clickCategoryModel.subCategory.any { it.isSelected }
             }
         } else {
             mAdapter.data.forEach {
@@ -148,10 +145,12 @@ class CustomMenuChildView : FrameLayout {
 
     private fun onClickChildMenuTab(mCategoryModel: CategoryModel) {
         mCategoryModel.let { model ->
-            CustomFilterMenuView.currentSelectedItemPosition = mMenuItemPosition
-            CustomFilterMenuView.currentSelectedItemMenuPosition = currentSelectedItemMenuPosition
-            CustomFilterMenuView.currentSelectedItemMenuChildPosition = currentSelectedItemMenuChildPosition
-            mMenuListAdapter?.selectedTabListener()?.invoke(model.searchSubType ?: "", model.searchType ?: "", model.title ?: "")
+            mMenuListAdapter?.apply {
+                currentSelectedItemPosition = this@CustomMenuChildView.mMenuItemPosition
+                currentSelectedItemMenuPosition = this@CustomMenuChildView.currentSelectedItemMenuPosition
+                currentSelectedItemMenuChildPosition = this@CustomMenuChildView.currentSelectedItemMenuChildPosition
+                selectedTabListener()?.invoke(model.searchSubType ?: "", model.searchType ?: "", model.title ?: "")
+            }
         }
     }
 
@@ -182,14 +181,6 @@ class CustomMenuChildView : FrameLayout {
         }
         currentSelectedItemMenuPosition = mMenuListAdapter?.data?.get(mMenuItemPosition)?.currentSelectedChildPosition ?: -1
         mAdapter.notifyDataSetChanged()
-    }
-
-    fun setSelectedStateListener(tabStateClickListener: (Int, Boolean) -> Unit) {
-        this.tabStateClickListener = tabStateClickListener
-    }
-
-    fun setSelectedTabListener(selectedTabListener: ((String, String) -> Unit)?) {
-        this.selectedTabListener = selectedTabListener
     }
 
     fun setNewData(itemMenuPosition: Int, mMenuListAdapter: MenuListAdapter) {

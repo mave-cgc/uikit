@@ -1,5 +1,8 @@
 package com.nh.lib_uikit.view.filter
 
+import android.animation.Animator
+import android.animation.ObjectAnimator
+import android.animation.ValueAnimator
 import android.content.Context
 import android.graphics.Color
 import android.util.AttributeSet
@@ -18,13 +21,7 @@ class CustomFilterMenuView : FrameLayout {
     constructor(context: Context, attrs: AttributeSet?) : this(context, attrs, 0)
     constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr)
 
-    companion object {
-        internal var currentSelectedItemPosition = -1
-        internal var currentSelectedItemMenuPosition = -1
-        internal var currentSelectedItemMenuChildPosition = -1
-    }
-
-
+    private var onDismissBlock: (() -> Unit)? = null
     private var newList: MutableList<MenuItemChildModel>? = null
     private val menuRlv: RecyclerView by lazy {
         findViewById(R.id.menuRlv)
@@ -46,6 +43,11 @@ class CustomFilterMenuView : FrameLayout {
                 moveToPosition(layoutManager, menuRlv, position)
             }
         })
+
+        setOnClickListener {
+            hintMenu()
+            onDismissBlock?.invoke()
+        }
     }
 
     fun showMenu() {
@@ -55,6 +57,10 @@ class CustomFilterMenuView : FrameLayout {
 
     fun hintMenu() {
         visibility = View.GONE
+    }
+
+    fun setOnDismissListener(block: (() -> Unit)?) {
+        this.onDismissBlock = block
     }
 
     override fun onVisibilityChanged(changedView: View, visibility: Int) {
@@ -72,28 +78,32 @@ class CustomFilterMenuView : FrameLayout {
             }
             mAdapter.notifyDataSetChanged()
         } else {
-            if (currentSelectedItemPosition >= 0) {
-                mAdapter.currentSelectedPosition = currentSelectedItemPosition
-                mAdapter.data[currentSelectedItemPosition].apply {
-                    isSelected = true
-                    if (currentSelectedItemMenuPosition >= 0) {
-                        currentSelectedChildPosition = currentSelectedItemMenuPosition
-                        menuList?.get(currentSelectedItemMenuPosition)?.apply {
-                            isSelected = true
-                            if (currentSelectedItemMenuChildPosition >= 0) {
-                                subCategory?.get(currentSelectedItemMenuChildPosition)?.apply {
-                                    isSelected = true
+            mAdapter.apply {
+                if (currentSelectedItemPosition >= 0) {
+                    currentSelectedPosition = currentSelectedItemPosition
+                    data[currentSelectedItemPosition].apply {
+                        isSelected = true
+                        if (currentSelectedItemMenuPosition >= 0) {
+                            currentSelectedChildPosition = currentSelectedItemMenuPosition
+                            menuList?.get(currentSelectedItemMenuPosition)?.apply {
+                                isSelected = true
+                                if (currentSelectedItemMenuChildPosition >= 0) {
+                                    subCategory?.get(currentSelectedItemMenuChildPosition)?.apply {
+                                        isSelected = true
+                                    }
                                 }
                             }
                         }
                     }
+                    notifyItemChanged(currentSelectedItemPosition)
                 }
-                mAdapter.notifyItemChanged(currentSelectedItemPosition)
             }
         }
         super.onVisibilityChanged(changedView, visibility)
-        if (visibility == View.VISIBLE && currentSelectedItemPosition >= 0) {
-            mAdapter.getOpenListener()?.onOpen(currentSelectedItemPosition)
+        mAdapter.apply {
+            if (visibility == View.VISIBLE && currentSelectedItemPosition >= 0) {
+                getOpenListener()?.onOpen(currentSelectedItemPosition)
+            }
         }
     }
 
@@ -101,7 +111,7 @@ class CustomFilterMenuView : FrameLayout {
         mAdapter.notifyDataSetChanged()
     }
 
-    fun setNewData(list: MutableList<CategoryModel>?) {
+    fun setNewData(list: List<CategoryModel>?) {
         newList?.clear()
         newList = mutableListOf()
         ListUtil.averageAssignFixLength(list, 3).forEach {
