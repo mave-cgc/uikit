@@ -9,7 +9,16 @@ object Data {
 
     fun getData(): List<CategoryModel> {
         val list = List(60) {
-            CategoryModel("searchSubType$it", "searchType$it", List(1*it) { childIt ->
+            CategoryModel("searchSubType$it", "searchType$it", List(1 * it) { childIt ->
+                CategoryModel("searchSubType$it-$childIt", "searchType$it-$childIt", null, "选项$it-$childIt")
+            }, "选项$it")
+        }
+        return list
+    }
+
+    fun getData2(): List<CategoryModel> {
+        val list = List(10) {
+            CategoryModel("searchSubType$it", "searchType$it", List(1 * it) { childIt ->
                 CategoryModel("searchSubType$it-$childIt", "searchType$it-$childIt", null, "选项$it-$childIt")
             }, "选项$it")
         }

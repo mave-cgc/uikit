@@ -13,16 +13,37 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         val filterTextView: CustomFilterTextView = findViewById(R.id.tvCustomFilterTextView)
+        val tvCustomFilterTextView2: CustomFilterTextView = findViewById(R.id.tvCustomFilterTextView2)
         val mCustomFilterMenuView: CustomFilterMenuView = findViewById(R.id.customFilterMenuView)
+        mCustomFilterMenuView.setNewData(Data.getData())
+        mCustomFilterMenuView.setNewData(Data.getData2())
 
-        filterTextView.bindMenuView(mCustomFilterMenuView)
-
-        mCustomFilterMenuView.setNewData(Data.getData() as MutableList<CategoryModel>?)
+        filterTextView.setOnClickStateChangeListener {
+            tvCustomFilterTextView2.setCheckState(false)
+            if (it) {
+                mCustomFilterMenuView.showMenu()
+            } else {
+                mCustomFilterMenuView.hintMenu()
+            }
+        }
+        tvCustomFilterTextView2.setOnClickStateChangeListener {
+            filterTextView.setCheckState(false)
+            if (it) {
+                mCustomFilterMenuView.showMenu()
+            } else {
+                mCustomFilterMenuView.hintMenu()
+            }
+        }
+        mCustomFilterMenuView.setOnDismissListener {
+            filterTextView.setCheckState(false)
+            tvCustomFilterTextView2.setCheckState(false)
+        }
         mCustomFilterMenuView.setSelectedTabListener { searchSubType: String, searchType: String, title: String ->
             filterTextView.text = title
             Toast.makeText(this, "searchSubType:$searchSubType,searchType:$searchType", Toast.LENGTH_SHORT).show()
             mCustomFilterMenuView.hintMenu()
-            filterTextView.selectedState()
+            filterTextView.setCheckState(false)
+            tvCustomFilterTextView2.setCheckState(false)
         }
     }
 }

@@ -45,8 +45,9 @@ dependencies {
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
-
+    //RecyclerView 通用Adapter
+    implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.34'
     implementation 'com.google.code.gson:gson:2.8.6'
     implementation project(path: ":lib_uikit")
-//    implementation 'com.github.mave-cgc:uikit:v0.0.4'
+//    implementation 'com.github.mave-cgc:uikit:v0.0.6'
 }

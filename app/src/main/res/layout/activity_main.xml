@@ -3,8 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:animateLayoutChanges="true"
     android:layout_height="match_parent"
+    android:animateLayoutChanges="true"
     tools:context=".MainActivity">
 
     <com.nh.lib_uikit.view.filter.CustomFilterTextView
@@ -20,6 +20,24 @@
         app:defDrawable="@mipmap/icon_to_down"
         app:defTextColor="#333333"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:selDrawable="@mipmap/icon_to_top_a"
+        app:selTextColor="#F2664C"
+        app:showLocation="right" />
+
+    <com.nh.lib_uikit.view.filter.CustomFilterTextView
+        android:id="@+id/tvCustomFilterTextView2"
+        android:layout_width="wrap_content"
+        android:layout_height="48dp"
+        android:drawablePadding="4dp"
+        android:gravity="center"
+        android:paddingStart="15dp"
+        android:paddingEnd="15dp"
+        android:text="分类"
+        android:textSize="28sp"
+        app:defDrawable="@mipmap/icon_to_down"
+        app:defTextColor="#333333"
+        app:layout_constraintStart_toEndOf="@id/tvCustomFilterTextView"
         app:layout_constraintTop_toTopOf="parent"
         app:selDrawable="@mipmap/icon_to_top_a"
         app:selTextColor="#F2664C"
