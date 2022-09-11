@@ -38,8 +38,13 @@ class MenuListAdapter(data: MutableList<MenuItemChildModel>?) : BaseMultiItemQui
         }
     }
 
+    private var onDismissBlock: (() -> Unit)? = null
     private var mOnOpenListener: OnOpenListener? = null
     private var selectedTabListener: ((String, String, String) -> Unit)? = null
+
+    fun getDismissBlock(): (() -> Unit)? {
+        return onDismissBlock
+    }
 
     fun getOpenListener(): OnOpenListener? {
         return mOnOpenListener
@@ -55,6 +60,10 @@ class MenuListAdapter(data: MutableList<MenuItemChildModel>?) : BaseMultiItemQui
 
     fun setSelectedTabListener(selectedTabListener: ((String, String, String) -> Unit)?) {
         this.selectedTabListener = selectedTabListener
+    }
+
+    fun setOnDismissListener(block: (() -> Unit)?) {
+        this.onDismissBlock = block
     }
 
     interface OnOpenListener {

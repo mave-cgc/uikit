@@ -136,7 +136,7 @@ class CustomMenuChildView : FrameLayout {
             notifyItemChanged(mMenuItemPosition)
         }
         //如果无子项就直接选中菜单项
-        if (mAdapter.data[position].subCategory?.isEmpty() == true) {
+        if (mAdapter.data[position].subCategory?.isEmpty() == null) {
             //记录临时选择的菜单项
             currentSelectedItemMenuPosition = position
             postDelayed({ onClickChildMenuTab(clickCategoryModel) }, 300)
@@ -150,6 +150,7 @@ class CustomMenuChildView : FrameLayout {
                 currentSelectedItemMenuPosition = this@CustomMenuChildView.currentSelectedItemMenuPosition
                 currentSelectedItemMenuChildPosition = this@CustomMenuChildView.currentSelectedItemMenuChildPosition
                 selectedTabListener()?.invoke(model.searchSubType ?: "", model.searchType ?: "", model.title ?: "")
+                getDismissBlock()?.invoke()
             }
         }
     }

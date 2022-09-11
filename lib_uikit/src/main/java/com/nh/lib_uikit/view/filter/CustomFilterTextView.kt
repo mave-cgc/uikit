@@ -54,6 +54,11 @@ class CustomFilterTextView : AppCompatTextView {
         currentSelectedState = state
         setDrawable()
         changeUpdateTextState(currentSelectedState)
+        if (state) {
+            mCustomFilterMenuView?.showMenu()
+        } else {
+            mCustomFilterMenuView?.hintMenu()
+        }
     }
 
     private fun setDrawable() {
@@ -75,6 +80,9 @@ class CustomFilterTextView : AppCompatTextView {
 
     fun bindMenuView(menuView: CustomFilterMenuView) {
         mCustomFilterMenuView = menuView
+        mCustomFilterMenuView?.setOnDismissListener {
+            setCheckState(false)
+        }
     }
 
     fun setOnClickStateChangeListener(listener: OnClickStateChangeListener) {

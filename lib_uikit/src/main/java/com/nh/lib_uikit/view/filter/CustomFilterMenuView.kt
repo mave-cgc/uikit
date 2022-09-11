@@ -1,8 +1,5 @@
 package com.nh.lib_uikit.view.filter
 
-import android.animation.Animator
-import android.animation.ObjectAnimator
-import android.animation.ValueAnimator
 import android.content.Context
 import android.graphics.Color
 import android.util.AttributeSet
@@ -21,7 +18,6 @@ class CustomFilterMenuView : FrameLayout {
     constructor(context: Context, attrs: AttributeSet?) : this(context, attrs, 0)
     constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr)
 
-    private var onDismissBlock: (() -> Unit)? = null
     private var newList: MutableList<MenuItemChildModel>? = null
     private val menuRlv: RecyclerView by lazy {
         findViewById(R.id.menuRlv)
@@ -37,6 +33,7 @@ class CustomFilterMenuView : FrameLayout {
         val layoutManager = LinearLayoutManager(context)
         menuRlv.layoutManager = layoutManager
         menuRlv.adapter = mAdapter
+        menuRlv.setPadding(paddingLeft, paddingTop, paddingRight, paddingBottom)
 
         mAdapter.setOnOPenListener(object : MenuListAdapter.OnOpenListener {
             override fun onOpen(position: Int) {
@@ -46,7 +43,7 @@ class CustomFilterMenuView : FrameLayout {
 
         setOnClickListener {
             hintMenu()
-            onDismissBlock?.invoke()
+            mAdapter.getDismissBlock()?.invoke()
         }
     }
 
@@ -60,7 +57,7 @@ class CustomFilterMenuView : FrameLayout {
     }
 
     fun setOnDismissListener(block: (() -> Unit)?) {
-        this.onDismissBlock = block
+        mAdapter.setOnDismissListener(block)
     }
 
     override fun onVisibilityChanged(changedView: View, visibility: Int) {
