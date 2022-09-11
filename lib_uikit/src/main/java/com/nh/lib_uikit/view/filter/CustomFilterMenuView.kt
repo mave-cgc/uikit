@@ -34,6 +34,7 @@ class CustomFilterMenuView : FrameLayout {
         menuRlv.layoutManager = layoutManager
         menuRlv.adapter = mAdapter
         menuRlv.setPadding(paddingLeft, paddingTop, paddingRight, paddingBottom)
+        setPadding(0,0,0,0)
 
         mAdapter.setOnOPenListener(object : MenuListAdapter.OnOpenListener {
             override fun onOpen(position: Int) {
