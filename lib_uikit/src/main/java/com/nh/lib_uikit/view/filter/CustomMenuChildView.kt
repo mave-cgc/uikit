@@ -136,7 +136,7 @@ class CustomMenuChildView : FrameLayout {
             notifyItemChanged(mMenuItemPosition)
         }
         //如果无子项就直接选中菜单项
-        if (mAdapter.data[position].subCategory?.isEmpty() == null) {
+        if (mAdapter.data[position].subCategory.isNullOrEmpty()) {
             //记录临时选择的菜单项
             currentSelectedItemMenuPosition = position
             postDelayed({ onClickChildMenuTab(clickCategoryModel) }, 300)

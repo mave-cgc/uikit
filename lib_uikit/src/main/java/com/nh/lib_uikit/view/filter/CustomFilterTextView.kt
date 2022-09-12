@@ -45,6 +45,7 @@ class CustomFilterTextView : AppCompatTextView {
             currentSelectedState = !currentSelectedState
             setDrawable()
             changeUpdateTextState(currentSelectedState)
+            showContent()
             onClickStateChangeListener?.onClickStateChange(currentSelectedState)
             onClickStateChangeBlock?.invoke(currentSelectedState)
         }
@@ -54,7 +55,11 @@ class CustomFilterTextView : AppCompatTextView {
         currentSelectedState = state
         setDrawable()
         changeUpdateTextState(currentSelectedState)
-        if (state) {
+        showContent()
+    }
+
+    private fun showContent(){
+        if (currentSelectedState) {
             mCustomFilterMenuView?.showMenu()
         } else {
             mCustomFilterMenuView?.hintMenu()
