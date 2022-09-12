@@ -77,15 +77,15 @@ class CustomFilterMenuView : FrameLayout {
             mAdapter.notifyDataSetChanged()
         } else {
             mAdapter.apply {
-                if (currentSelectedItemPosition >= 0) {
+                if (currentSelectedItemPosition >= 0 && data.size > 0) {
                     currentSelectedPosition = currentSelectedItemPosition
                     data[currentSelectedItemPosition].apply {
                         isSelected = true
-                        if (currentSelectedItemMenuPosition >= 0) {
+                        if (currentSelectedItemMenuPosition >= 0 && menuList?.size ?: 0 > 0) {
                             currentSelectedChildPosition = currentSelectedItemMenuPosition
                             menuList?.get(currentSelectedItemMenuPosition)?.apply {
                                 isSelected = true
-                                if (currentSelectedItemMenuChildPosition >= 0) {
+                                if (currentSelectedItemMenuChildPosition >= 0 && subCategory?.size ?: 0 > 0) {
                                     subCategory?.get(currentSelectedItemMenuChildPosition)?.apply {
                                         isSelected = true
                                     }
@@ -123,7 +123,7 @@ class CustomFilterMenuView : FrameLayout {
                     menuItemChildModel.isSelected = true
                     mAdapter.currentSelectedPosition = itemIndex
                     mAdapter.currentSelectedItemPosition = itemIndex
-                    mAdapter.currentSelectedItemMenuPosition =childIndex
+                    mAdapter.currentSelectedItemMenuPosition = childIndex
                     categoryModel.subCategory?.forEachIndexed { childchildIndex, categoryModel ->
                         if (categoryModel.isSelected) {
                             mAdapter.currentSelectedItemMenuChildPosition = childchildIndex

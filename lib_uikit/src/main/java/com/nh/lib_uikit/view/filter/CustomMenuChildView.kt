@@ -209,7 +209,7 @@ class CustomMenuChildView : FrameLayout {
 
         override fun convert(holder: BaseViewHolder, item: CategoryModel) {
             holder.setBackgroundRes(R.id.itemChildTabBg, R.drawable.item_menu_child_child_tab_bg)
-            holder.getView<AppCompatCheckedTextView>(R.id.itemChildTab).setTextColor(ContextCompat.getColor(mContext, R.color.item_menu_child_child_text_color))
+//            holder.getView<AppCompatCheckedTextView>(R.id.itemChildTab).setTextColor(ContextCompat.getColor(mContext, R.color.item_menu_child_child_text_color))
             holder.getView<AppCompatCheckedTextView>(R.id.itemChildTabBg).isChecked = item.isSelected
             holder.getView<AppCompatCheckedTextView>(R.id.itemChildTab).isChecked = item.isSelected
             holder.setGone(R.id.itemChildTabImg, true)
