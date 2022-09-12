@@ -34,7 +34,7 @@ class CustomFilterMenuView : FrameLayout {
         menuRlv.layoutManager = layoutManager
         menuRlv.adapter = mAdapter
         menuRlv.setPadding(paddingLeft, paddingTop, paddingRight, paddingBottom)
-        setPadding(0,0,0,0)
+        setPadding(0, 0, 0, 0)
 
         mAdapter.setOnOPenListener(object : MenuListAdapter.OnOpenListener {
             override fun onOpen(position: Int) {
@@ -116,6 +116,21 @@ class CustomFilterMenuView : FrameLayout {
             newList?.add(MenuItemChildModel().apply {
                 menuList = it as MutableList<CategoryModel>?
             })
+        }
+        newList?.forEachIndexed { itemIndex, menuItemChildModel ->
+            menuItemChildModel.menuList?.forEachIndexed { childIndex, categoryModel ->
+                if (categoryModel.isSelected) {
+                    menuItemChildModel.isSelected = true
+                    mAdapter.currentSelectedPosition = itemIndex
+                    mAdapter.currentSelectedItemPosition = itemIndex
+                    mAdapter.currentSelectedItemMenuPosition =childIndex
+                    categoryModel.subCategory?.forEachIndexed { childchildIndex, categoryModel ->
+                        if (categoryModel.isSelected) {
+                            mAdapter.currentSelectedItemMenuChildPosition = childchildIndex
+                        }
+                    }
+                }
+            }
         }
         mAdapter.setNewData(newList)
     }
